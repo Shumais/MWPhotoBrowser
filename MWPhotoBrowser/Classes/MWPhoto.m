@@ -156,24 +156,32 @@
             @try {
                 SDWebImageManager *manager = [SDWebImageManager sharedManager];
                 _webImageOperation = [manager downloadImageWithURL:_photoURL
-                                                           options:0
-                                                          progress:^(NSInteger receivedSize, NSInteger expectedSize) {
-                                                              if (expectedSize > 0) {
-                                                                  float progress = receivedSize / (float)expectedSize;
-                                                                  NSDictionary* dict = [NSDictionary dictionaryWithObjectsAndKeys:
-                                                                                        [NSNumber numberWithFloat:progress], @"progress",
-                                                                                        self, @"photo", nil];
-                                                                  [[NSNotificationCenter defaultCenter] postNotificationName:MWPHOTO_PROGRESS_NOTIFICATION object:dict];
-                                                              }
-                                                          }
-                                                         completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL *imageURL) {
-                                                             if (error) {
-                                                                 MWLog(@"SDWebImage failed to download image: %@", error);
-                                                             }
-                                                             _webImageOperation = nil;
-                                                             self.underlyingImage = image;
-                                                             [self imageLoadingComplete];
-                                                         }];
+                                                      options:SDWebImageRetryFailed
+                                                     progress:^(NSInteger receivedSize, NSInteger expectedSize) {
+                                                         if (expectedSize > 0) {
+                                                             float progress = receivedSize / (float)expectedSize;
+                                                             NSDictionary* dict = [NSDictionary dictionaryWithObjectsAndKeys:
+                                                                                   [NSNumber numberWithFloat:progress], @"progress",
+                                                                                   self, @"photo", nil];
+                                                             [[NSNotificationCenter defaultCenter] postNotificationName:MWPHOTO_PROGRESS_NOTIFICATION object:dict];
+                                                         }
+                                                     }
+                                                    completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL* imageUrl) {
+                                                        
+                                                        
+                                                        if (error) {
+                                                            MWLog(@"SDWebImage failed to download image: %@", error);
+                                                            // Wait a bit and try again
+                                                            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 2 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
+                                                                // Try again!
+                                                                [self performLoadUnderlyingImageAndNotify];
+                                                            });
+                                                            return;
+                                                        }
+                                                        _webImageOperation = nil;
+                                                        self.underlyingImage = image;
+                                                        [self imageLoadingComplete];
+                                                    }];
             } @catch (NSException *e) {
                 MWLog(@"Photo from web: %@", e);
                 _webImageOperation = nil;

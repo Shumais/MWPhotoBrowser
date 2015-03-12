@@ -14,6 +14,7 @@
 // Declare private methods of browser
 @interface MWPhotoBrowser () {
     
+    @protected
 	// Data
     NSUInteger _photoCount;
     NSMutableArray *_photos;
@@ -21,7 +22,6 @@
 	NSArray *_depreciatedPhotoData; // Depreciated
 	
 	// Views
-	UIScrollView *_pagingScrollView;
 	
 	// Paging & layout
 	NSMutableSet *_visiblePages, *_recycledPages;
@@ -33,7 +33,7 @@
 	// Navigation & controls
 	UIToolbar *_toolbar;
 	NSTimer *_controlVisibilityTimer;
-	UIBarButtonItem *_previousButton, *_nextButton, *_actionButton, *_doneButton;
+	UIBarButtonItem *_previousButton, *_nextButton, *_actionButton, *_doneButton, *_trashButton;
     MBProgressHUD *_progressHUD;
     UIActionSheet *_actionsSheet;
     
@@ -44,6 +44,7 @@
     
     // Appearance
     BOOL _previousNavBarHidden;
+    BOOL _previousNavToolbarHidden;
     BOOL _previousNavBarTranslucent;
     UIBarStyle _previousNavBarStyle;
     UIStatusBarStyle _previousStatusBarStyle;
@@ -68,6 +69,9 @@
     CGPoint _currentGridContentOffset;
     
 }
+
+
+@property (nonatomic) UIScrollView *pagingScrollView;
 
 // Properties
 @property (nonatomic) UIActivityViewController *activityViewController;
