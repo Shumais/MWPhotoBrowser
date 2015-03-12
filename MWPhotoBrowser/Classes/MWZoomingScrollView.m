@@ -219,6 +219,18 @@
         CGFloat imageAR = imageSize.width / imageSize.height;
         CGFloat xScale = boundsSize.width / imageSize.width;    // the scale needed to perfectly fit the image width-wise
         CGFloat yScale = boundsSize.height / imageSize.height;  // the scale needed to perfectly fit the image height-wise
+        
+        if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPhone) // Not iPads
+        {
+            NSString *iosVersion = [UIDevice currentDevice].systemVersion; // iOS version as a string
+            
+            if ([@"8.0" compare:iosVersion options:NSNumericSearch] != NSOrderedDescending) // 8.0 and up
+            {
+                CGFloat scrollBugFixWidthInset = 2.0f * [[UIScreen mainScreen] scale]; // Reduce width of content view
+                xScale = boundsSize.width / (imageSize.width + scrollBugFixWidthInset);
+            }
+        }
+        
         // Zooms standard portrait images on a 3.5in screen but not on a 4in screen.
         if (ABS(boundsAR - imageAR) < 0.17) {
             zoomScale = MAX(xScale, yScale);
