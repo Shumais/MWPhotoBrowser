@@ -73,12 +73,16 @@
                                                    object:nil];
         
 		// Setup
-		self.backgroundColor = [UIColor whiteColor];
+		self.backgroundColor = [UIColor blackColor];
 		self.delegate = self;
 		self.showsHorizontalScrollIndicator = NO;
 		self.showsVerticalScrollIndicator = NO;
 		self.decelerationRate = UIScrollViewDecelerationRateFast;
 		self.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+        
+        UITapGestureRecognizer *doubleTapOne = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleDoubleTap:)];
+        doubleTapOne.numberOfTouchesRequired = 1; doubleTapOne.numberOfTapsRequired = 2; doubleTapOne.delegate = self;
+        [self addGestureRecognizer:doubleTapOne];
         
     }
     return self;
@@ -371,7 +375,7 @@
 #pragma mark - Tap Detection
 
 - (void)handleSingleTap:(CGPoint)touchPoint {
-	[_photoBrowser performSelector:@selector(toggleControls) withObject:nil afterDelay:0.2];
+//	[_photoBrowser performSelector:@selector(toggleControls) withObject:nil afterDelay:0.2];
 }
 
 - (void)handleDoubleTap:(CGPoint)touchPoint {
