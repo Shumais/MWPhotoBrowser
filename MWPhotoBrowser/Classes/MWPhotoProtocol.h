@@ -61,4 +61,7 @@
 // Cancel any background loading of image data
 - (void)cancelAnyLoading;
 
+// Check if image is loading
+// If true then thumbnail is being displayed and image is being loaded in background.
+- (BOOL)isLoading;
 @end

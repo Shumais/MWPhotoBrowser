@@ -105,11 +105,11 @@
 
 - (void)setPhoto:(id<MWPhoto>)photo {
     // Cancel any loading on old photo
-    if (_photo && photo == nil) {
-        if ([_photo respondsToSelector:@selector(cancelAnyLoading)]) {
-            [_photo cancelAnyLoading];
-        }
-    }
+//    if (_photo && photo == nil) {
+//        if ([_photo respondsToSelector:@selector(cancelAnyLoading)]) {
+//            [_photo cancelAnyLoading];
+//        }
+//    }
     _photo = photo;
     UIImage *img = [_photoBrowser imageForPhoto:_photo];
     if (img) {
@@ -122,7 +122,7 @@
 
 // Get and display image
 - (void)displayImage {
-	if (_photo && _photoImageView.image == nil) {
+	if ((_photo && _photoImageView.image == nil) || [_photo underlyingImage]!=_photoImageView.image ) {
 		
 		// Reset
 		self.maximumZoomScale = 1;
@@ -135,7 +135,8 @@
 		if (img) {
 			
 			// Hide indicator
-			[self hideLoadingIndicator];
+            if (![_photo isLoading])
+                [self hideLoadingIndicator];
 			
 			// Set image
 			_photoImageView.image = img;
@@ -149,7 +150,8 @@
 			self.contentSize = photoImageViewFrame.size;
 
 			// Set zoom to minimum zoom
-			[self setMaxMinZoomScalesForCurrentBounds];
+            if (![_photo isLoading])
+                [self setMaxMinZoomScalesForCurrentBounds];
 			
 		} else {
 			
@@ -157,8 +159,8 @@
             [self displayImageFailure];
 			
 		}
-		[self setNeedsLayout];
 	}
+    [self setNeedsLayout];
 }
 
 // Image failed so just show black!

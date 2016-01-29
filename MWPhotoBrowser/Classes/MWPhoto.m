@@ -17,7 +17,8 @@
 
     BOOL _loadingInProgress;
     id <SDWebImageOperation> _webImageOperation;
-        
+    NSURL *_placeHolderURL;
+    UIImage *_noPreviewImage;
 }
 
 - (void)imageLoadingComplete;
@@ -41,6 +42,14 @@
 
 + (MWPhoto *)photoWithURL:(NSURL *)url {
 	return [[MWPhoto alloc] initWithURL:url];
+}
+
++ (MWPhoto *)photoWithURL:(NSURL *)url placeHolderImage:(UIImage *)placeHolder{
+    return [[MWPhoto alloc] initWithURL:url placeHolderImage:placeHolder];
+}
+
++ (MWPhoto *)photoWithURL:(NSURL *)url placeHolderURL:(NSURL *)placeHolderURL noPreviewImage:(UIImage *)noPreviewImage {
+    return [[MWPhoto alloc] initWithURL:url placeHolderURL:placeHolderURL noPreviewImage:noPreviewImage];
 }
 
 #pragma mark - Init
@@ -67,6 +76,22 @@
 	return self;
 }
 
+- (id)initWithURL:(NSURL *)url placeHolderImage:(UIImage *)placeholder {
+    if ((self = [super init])) {
+        _image = placeholder;
+        _photoURL = [url copy];
+    }
+    return self;
+}
+
+- (id)initWithURL:(NSURL *)url placeHolderURL:(NSURL *)placeHolderURL noPreviewImage:(UIImage *)noPreviewImage {
+    if ((self = [super init])) {
+        _noPreviewImage = noPreviewImage;
+        _placeHolderURL = placeHolderURL;
+        _photoURL = [url copy];
+    }
+    return self;
+}
 #pragma mark - MWPhoto Protocol Methods
 
 - (UIImage *)underlyingImage {
@@ -104,7 +129,6 @@
         [self imageLoadingComplete];
         
     } else if (_photoURL) {
-        
         // Check what type of url it is
         if ([[[_photoURL scheme] lowercaseString] isEqualToString:@"assets-library"]) {
             
@@ -154,6 +178,48 @@
             
             // Load async from web (using SDWebImage)
             @try {
+                if (!self.underlyingImage) {
+                    
+                    if (_photoURL == nil || _photoURL.absoluteString.length == 0) {
+                        self.underlyingImage = _noPreviewImage;
+                        [self imageLoadingComplete];
+                        
+                        return;
+                    }
+                    
+//                    SDImageCache *imageCache = [SDImageCache sharedImageCache];
+//                    UIImage *cachedPlaceholderImage = [imageCache imageFromDiskCacheForKey:[_placeHolderURL absoluteString]];
+//                    if (cachedPlaceholderImage) {
+//                        self.underlyingImage = cachedPlaceholderImage;
+//                        [self performSelector:@selector(postCompleteNotification) withObject:nil afterDelay:0];
+//                    }
+//                    else {
+//                        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+//                            
+//                            SDWebImageManager *tempManager = [SDWebImageManager sharedManager];
+//                            [tempManager downloadImageWithURL:_placeHolderURL
+//                                                      options:SDWebImageRetryFailed
+//                                                     progress:^(NSInteger receivedSize, NSInteger expectedSize) {
+//                                                         
+//                                                     }
+//                                                    completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL* imageUrl) {
+//                                                        if (error) {
+//                                                            MWLog(@"SDWebImage failed to download image: %@", error);
+//                                                            // Wait a bit and try again
+//                                                            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 2 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
+//                                                                self.underlyingImage = _noPreviewImage;
+//                                                            });
+//                                                            return;
+//                                                        }
+//                                                        if (_loadingInProgress) {
+//                                                            self.underlyingImage = image;
+//                                                            [self performSelector:@selector(postCompleteNotification) withObject:nil afterDelay:0];
+//                                                        }
+//                                                    }];
+//                        });
+//                    }
+                }
+                
                 SDWebImageManager *manager = [SDWebImageManager sharedManager];
                 _webImageOperation = [manager downloadImageWithURL:_photoURL
                                                       options:SDWebImageRetryFailed
@@ -224,4 +290,7 @@
     }
 }
 
+- (BOOL)isLoading {
+    return _loadingInProgress;
+}
 @end
