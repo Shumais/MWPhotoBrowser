@@ -40,4 +40,5 @@ Pod::Spec.new do |s|
     s.dependency 'MBProgressHUD', '~> 0.9'
     s.dependency 'DACircularProgress', '~> 2.2'
     s.dependency 'PSTImprovedCollectionView', '~> 2.0'
+    s.dependency 'FLAnimatedImage', '~> 1.0'
 end
