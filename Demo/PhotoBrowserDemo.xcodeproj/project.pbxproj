@@ -31,6 +31,8 @@
 		0E8515D017FCC34700FE1EF3 /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0E8515CF17FCC34700FE1EF3 /* AssetsLibrary.framework */; };
 		0E85B24C14C6F40500EA35BF /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 0E85B24E14C6F40500EA35BF /* Localizable.strings */; };
 		0EA380351573EA53003F4582 /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0EA380341573EA53003F4582 /* ImageIO.framework */; };
+		30570B461C9BF74A00A58BD7 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 30570B451C9BF74900A58BD7 /* MobileCoreServices.framework */; };
+		30570B481C9BF75C00A58BD7 /* Screencast.gif in Resources */ = {isa = PBXBuildFile; fileRef = 30570B471C9BF75C00A58BD7 /* Screencast.gif */; };
 		4C6F979214AF734900F8389A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C6F979114AF734900F8389A /* UIKit.framework */; };
 		4C6F979414AF734900F8389A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C6F979314AF734900F8389A /* Foundation.framework */; };
 		4C6F979614AF734900F8389A /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C6F979514AF734900F8389A /* CoreGraphics.framework */; };
@@ -82,6 +84,8 @@
 		0E8515CF17FCC34700FE1EF3 /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
 		0E85B24D14C6F40500EA35BF /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		0EA380341573EA53003F4582 /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
+		30570B451C9BF74900A58BD7 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
+		30570B471C9BF75C00A58BD7 /* Screencast.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; name = Screencast.gif; path = ../../../Downloads/Screencast.gif; sourceTree = "<group>"; };
 		4C6F978D14AF734900F8389A /* PhotoBrowserDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PhotoBrowserDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4C6F979114AF734900F8389A /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		4C6F979314AF734900F8389A /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -101,6 +105,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				30570B461C9BF74A00A58BD7 /* MobileCoreServices.framework in Frameworks */,
 				0E3CF61C18CF322F000EC5F2 /* MapKit.framework in Frameworks */,
 				0E8515D017FCC34700FE1EF3 /* AssetsLibrary.framework in Frameworks */,
 				0E8515C617FC781600FE1EF3 /* QuartzCore.framework in Frameworks */,
@@ -145,6 +150,7 @@
 		4C6F979014AF734900F8389A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				30570B451C9BF74900A58BD7 /* MobileCoreServices.framework */,
 				0E3CF61B18CF322F000EC5F2 /* MapKit.framework */,
 				0E8515CF17FCC34700FE1EF3 /* AssetsLibrary.framework */,
 				0E8515C517FC781600FE1EF3 /* QuartzCore.framework */,
@@ -186,6 +192,7 @@
 			isa = PBXGroup;
 			children = (
 				0E3D58DC1805629E0000E3A0 /* photo1t.jpg */,
+				30570B471C9BF75C00A58BD7 /* Screencast.gif */,
 				0E3D58DD1805629E0000E3A0 /* photo2t.jpg */,
 				0E3D58DE1805629E0000E3A0 /* photo3t.jpg */,
 				0E3D58DF1805629E0000E3A0 /* photo4t.jpg */,
@@ -288,6 +295,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0E3D58E51805629E0000E3A0 /* photo2t.jpg in Resources */,
+				30570B481C9BF75C00A58BD7 /* Screencast.gif in Resources */,
 				0E3D5895180456580000E3A0 /* photo7.jpg in Resources */,
 				0E3D5894180456580000E3A0 /* photo6.jpg in Resources */,
 				0E3D58E71805629E0000E3A0 /* photo4t.jpg in Resources */,
